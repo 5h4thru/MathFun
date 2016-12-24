@@ -141,8 +141,8 @@ public class MainActivity extends AppCompatActivity {
                 resultTextView.setText("Your score is "  + Integer.toString(score) + " / " + Integer.toString(numberOfQuestions));
                 // change color of timer and play a sound
                 timerTextView.setBackgroundColor(Color.rgb(255,0,0));
-                //MediaPlayer mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.airhorn);
-                //mediaPlayer.start();
+                MediaPlayer mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.airhorn);
+                mediaPlayer.start();
                 // show playAgainButton
                 playAgainButton.setVisibility(View.VISIBLE);
                 // disable gamePlay by disabling all the buttons
