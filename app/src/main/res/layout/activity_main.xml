@@ -46,6 +46,18 @@
         android:padding="15dp"
         android:textColor="@android:color/black" />
 
+    <TextView
+        android:text="0/0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pointsTextView"
+        android:textSize="30sp"
+        android:padding="10dp"
+        android:background="@android:color/holo_orange_light"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -116,24 +128,12 @@
     </GridLayout>
 
     <TextView
-        android:text="Correct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/resultTextView"
         android:textSize="30sp"
         android:layout_below="@+id/startButton"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:text="0/0"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/pointsTextView"
-        android:textSize="30sp"
-        android:padding="10dp"
-        android:background="@android:color/holo_orange_light"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
 
 </RelativeLayout>
