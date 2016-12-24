@@ -1,25 +1,34 @@
 package com.yahoo.palagummi.mathfun;
 
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     Button startButton = null;
+    Button playAgainButton = null;
+    TextView descriptionTextView= null;
     TextView timerTextView = null;
     TextView sumTextView = null;
     TextView pointsTextView = null;
     TextView resultTextView = null;
+    RelativeLayout gameRelativeLayout = null;
     ArrayList<Integer> answers = new ArrayList<Integer>();
     int locationOfCorrectAnswer;
+
 
     // answerButtons
     Button button0;
@@ -34,6 +43,10 @@ public class MainActivity extends AppCompatActivity {
     // startButton onClick
     public void start(View view){
         startButton.setVisibility(View.INVISIBLE);
+        descriptionTextView.setVisibility(View.INVISIBLE);
+        gameRelativeLayout.setVisibility(View.VISIBLE);
+        // call the gameMethod
+        playAgain(findViewById(R.id.playAgainButton)); // does not matter what the view is
     }
 
 
@@ -56,6 +69,12 @@ public class MainActivity extends AppCompatActivity {
 
     // generateQuestion helper method
     public void generateQuestion() {
+        // enable all the buttons
+        button0.setEnabled(true);
+        button1.setEnabled(true);
+        button2.setEnabled(true);
+        button3.setEnabled(true);
+
         // declare two numbers to represent the sum
         int firstNum;
         int secondNum;
@@ -92,29 +111,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    // playAgainButton onClick
+    public void playAgain(View view) {
+        timerTextView = (TextView) findViewById(R.id.timerTextView);
+        score = 0;
+        numberOfQuestions = 0;
+        timerTextView.setText("00:30");
+        pointsTextView.setText("0 / 0");
+        resultTextView.setText("");
+        playAgainButton.setVisibility(View.INVISIBLE);
 
-        // get the startButton
-        startButton = (Button) findViewById(R.id.startButton);
-        // get the answerButtons
-        button0 = (Button) findViewById(R.id.button0);
-        button1 = (Button) findViewById(R.id.button1);
-        button2 = (Button) findViewById(R.id.button2);
-        button3 = (Button) findViewById(R.id.button3);
-
-        // get the resultTextView, pointsTextView
-        resultTextView = (TextView) findViewById(R.id.resultTextView);
-        pointsTextView = (TextView) findViewById(R.id.pointsTextView);
-
-        // generate first question
         generateQuestion();
 
         // countDownTimer for 30 seconds
-        timerTextView = (TextView) findViewById(R.id.timerTextView);
-        new CountDownTimer(3100, 1000){
+        new CountDownTimer(5100, 1000){
             @Override
             public void onTick(long l) {
                 long timeLeft = l / 1000;
@@ -128,9 +138,43 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 timerTextView.setText("00:00");
+                resultTextView.setText("Your score is "  + Integer.toString(score) + " / " + Integer.toString(numberOfQuestions));
+                // change color of timer and play a sound
                 timerTextView.setBackgroundColor(Color.rgb(255,0,0));
-                resultTextView.setText("Done!");
+                //MediaPlayer mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.airhorn);
+                //mediaPlayer.start();
+                // show playAgainButton
+                playAgainButton.setVisibility(View.VISIBLE);
+                // disable gamePlay by disabling all the buttons
+                button0.setEnabled(false);
+                button1.setEnabled(false);
+                button2.setEnabled(false);
+                button3.setEnabled(false);
+
             }
         }.start();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // get the startButton, playAgainButton
+        startButton = (Button) findViewById(R.id.startButton);
+        playAgainButton = (Button) findViewById(R.id.playAgainButton);
+        descriptionTextView = (TextView) findViewById(R.id.descriptionTextView);
+        // get the answerButtons
+        button0 = (Button) findViewById(R.id.button0);
+        button1 = (Button) findViewById(R.id.button1);
+        button2 = (Button) findViewById(R.id.button2);
+        button3 = (Button) findViewById(R.id.button3);
+
+        // get the resultTextView, pointsTextView
+        resultTextView = (TextView) findViewById(R.id.resultTextView);
+        pointsTextView = (TextView) findViewById(R.id.pointsTextView);
+
+        gameRelativeLayout = (RelativeLayout) findViewById(R.id.gameRelativeLayout);
+
     }
 }
